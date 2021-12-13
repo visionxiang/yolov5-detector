@@ -1,4 +1,4 @@
-# Detect anything by YOLOv5
+# Detect Anything by YOLOv5
 
 Using yolov5 detector to detect anything
 
