@@ -9,7 +9,7 @@ Using yolov5 detector to detect anything
 
 ### Case 1: Fish detector by yolov5
 
-1, Download selected classes images (fish) from [Open Images Dataset V6](https://storage.googleapis.com/openimages/web/download.html).
+#### 1 Download selected classes images (fish) from [Open Images Dataset V6](https://storage.googleapis.com/openimages/web/download.html).
 
 - construct a image file list with specific categories and download them.    
 - The [official download script](https://raw.githubusercontent.com/openimages/dataset/master/downloader.py).    
@@ -18,10 +18,10 @@ Using yolov5 detector to detect anything
 
 Some changes have been made to adjust the dataset to meet yolov5 requirements, please refer to `open-images-downloader`.
 
-Reference: 
-[Download Selected classes Images](https://github.com/irvingzhang0512/open-images-downloader)  
-[Intro of OpenImages](https://blog.csdn.net/irving512/article/details/116180438)  
-[Intro of dataset categories](https://www.pianshen.com/article/7415336050/)
+Reference:   
+[Download Selected classes Images](https://github.com/irvingzhang0512/open-images-downloader)    
+[Intro of OpenImages](https://blog.csdn.net/irving512/article/details/116180438)    
+[Intro of dataset categories](https://www.pianshen.com/article/7415336050/)  
 [Other download manner](https://github.com/cvdfoundation/open-images-dataset#download-full-dataset-with-google-storage-transfer)
 
 
