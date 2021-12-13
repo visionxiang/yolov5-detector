@@ -1,5 +1,4 @@
 # Download Selected classes Images From Open-Images-Dataset V6
-# https://github.com/irvingzhang0512/open-images-downloader
 
 ## Description
 
@@ -41,3 +40,5 @@ python visualize.py
 # Save filelist file `{split}_{version}.txt` into `./yolo/{version}`
 python convert_to_yolo.py
 ```
+
+Reference: https://github.com/irvingzhang0512/open-images-downloader
