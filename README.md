@@ -167,6 +167,39 @@ The STORM graffiti/tagging detection dataset can be download [here](https://zeno
 
 Then transfer the bounding box annotation in XYXY_ABS mode to yolo format, and then training the detector.
 
+The label format convertion can be seen in `datalist_generation.py`.
+
+
+## Detector
+
+For the detector folder, we made some changes for the `detect.py` of YOLOv5:  
+- `detect_count.py`: add the object count on the right-top of the output.
+- `detect_stream.py`: support video live stream for input and output, and save some frames with detected bbox. 
+- `datalist_generation.py`: convert graffiti dataset to yolo format.
+
+Examples: 
+```
+# For images:
+python {detector} --weights best.pt --source /home/path/images/test.jpg --hide-labels --hide-conf --conf-thres=0.5 
+python {detector} --weights best.pt --source /home/path/images
+
+# For videos:
+python {detector} --weights best.pt --source /home/path/videos/test.mp4
+
+# For video stream:
+python detect_stream.py --weights best.pt --source 'rtmp://**.**.**.**:***/***' --outstream 'rtmp://**.**.**.**:***/***' --push-stream
+--save-txt: save some frames with detected bbox files (.txt).
+--nosave: not save detected images/videos.
+--save-frame-fps n: save n frames each second.
+--output-fps n: set fps of output video stream.
+--hide-labels: remove the labels of output image (at top-left of bbox)
+--hide-conf: remove the confidence of the output image
+--name result: folder for save, located at ./runs/detect/.
+
+detector: detect.py, detect_count.py, detect_stream.py
+
+# The result will be saved in ./runs/detect/*** for default.
+```
 
 
 
