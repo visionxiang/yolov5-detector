@@ -12,7 +12,7 @@ Requirements:
 
 
 
-## Case 1: Fish detector by YOLOv5
+## Case 1: Fish detection by YOLOv5
 
 ### 1) Download selected classes images (fish) from [Open Images Dataset V6](https://storage.googleapis.com/openimages/web/download.html).
 
