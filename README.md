@@ -169,6 +169,26 @@ Then transfer the bounding box annotation in XYXY_ABS mode to yolo format, and t
 
 The label format convertion can be seen in `datalist_generation.py`.
 
+**Output result to Json**  
+
+Output resulted image and bounding boxes to json file.
+
+1) Modify run() function in detect.py, as follows:  
+
+```
+# a) before `for path, im, im0s, vid_cap, s in dataset:`, add: 
+bbox_xyxy_abs = []
+
+# b) after `for *xyxy, conf, cls in reversed(det):`, add:
+bbox_xyxy_abs.append(torch.tensor(xyxy).numpy())
+
+# c) at the end of run(), add:
+return im0, bbox_xyxy_abs
+```
+
+2) Build the `nference.py` file to write data into json, see `detector/inference.py`.
+
+
 
 ## Detector
 
