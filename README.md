@@ -173,7 +173,7 @@ The label format convertion can be seen in `datalist_generation.py`.
 
 Output resulted image and bounding boxes to json file.
 
-1) Modify run() function in detect.py, as follows:  
+1) Modify `run()` function in detect.py, as follows:  
 
 ```
 # a) before `for path, im, im0s, vid_cap, s in dataset:`, add: 
@@ -186,7 +186,7 @@ bbox_xyxy_abs.append(torch.tensor(xyxy).numpy())
 return im0, bbox_xyxy_abs
 ```
 
-2) Build the `nference.py` file to write data into json, see `detector/inference.py`.
+2) Build the `inference.py` file to write data into json, see `detector/inference.py`.
 
 
 
@@ -196,6 +196,7 @@ For the detector folder, we made some changes for the `detect.py` of YOLOv5:
 - `detect_count.py`: add the object count on the right-top of the output.
 - `detect_stream.py`: support video live stream for input and output, and save some frames with detected bbox. 
 - `datalist_generation.py`: convert graffiti dataset to yolo format.
+- `inference.py`: write data into json file in gratiffi detection.
 
 Examples: 
 ```
