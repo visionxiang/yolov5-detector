@@ -66,7 +66,8 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
         push_stream=False,
         outstream='rtmp://188.116.30.54:1935/live/test_ai',
         output_fps=0,
-        save_frame_fps = 5
+        save_frame_fps = 5,
+        outpath = None # output path for images and videos, support directory or whole path
         ):
     source = str(source)
     save_img = not nosave and not source.endswith('.txt')  # save inference images
@@ -76,9 +77,20 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
     if is_url and is_file:
         source = check_file(source)  # download
 
-    # Directories
-    save_dir = increment_path(Path(project) / name, exist_ok=exist_ok)  # increment run
+    # Directories  ################### Add by video live: outpath
+    if not outpath: 
+        save_dir = increment_path(Path(project) / name, exist_ok=exist_ok)  # increment run
+    else:
+        # judge whether is a directory or image/video file
+        str0, ext0 = os.path.splitext(outpath)
+        if ext0 == '': # directory
+            save_dir = outpath
+        else: # file
+            dir0, name0 = os.path.split(outpath)
+            save_dir = dir0
+        save_dir = Path(save_dir)
     (save_dir / 'labels' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
+
 
     # Load model
     device = select_device(device)
@@ -162,7 +174,6 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
             previous = im #.clone()
         
         
-       
         im = torch.from_numpy(im).to(device)
         im = im.half() if half else im.float()  # uint8 to fp16/32
         im /= 255  # 0 - 255 to 0.0 - 1.0
@@ -218,8 +229,19 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
                 # cv2.imwrite(frame_path + '.jpg', im0)
 
             p = Path(p)  # to Path
-            save_path = str(save_dir / p.name)  # im.jpg
-            txt_path = str(save_dir / 'labels' / p.stem) + ('' if dataset.mode == 'image' else f'_{frame}')  # im.txt
+
+            ################### Add by video live: outpath
+            if os.path.splitext(outpath)[1] != '': # file
+                if dataset.mode == 'image':
+                    save_path = str(save_dir / os.path.basename(outpath))
+                else: # video output .mp4
+                    stem, ext = os.path.splitext(os.path.basename(outpath))
+                    out_name = stem + '.mp4'
+                    save_path = str(save_dir / out_name)
+            else:
+                save_path = str(save_dir / p.name)  # im.jpg
+
+            txt_path = str(save_dir / 'labels' / p.stem) + ('_input' if dataset.mode == 'image' else f'_{frame}')  # im.txt
             s += '%gx%g ' % im.shape[2:]  # print string
             gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
             imc = im0.copy() if save_crop else im0  # for save_crop
@@ -339,6 +361,7 @@ def parse_opt():
     parser.add_argument('--output-fps', type=int, default=24, help='fps of output stream')
     parser.add_argument('--push-stream', action='store_true', help='push results to server')
     parser.add_argument('--outstream', type=str, default='rtmp://192.168.3.99/live/test_ai', help='Output stream')
+    parser.add_argument('--outpath', type=str, default=None, help='output path and filename of resulted image/video')
 
     opt = parser.parse_args()
     opt.imgsz *= 2 if len(opt.imgsz) == 1 else 1  # expand
